@@ -6,13 +6,17 @@ local twistedList = {
     "TwistedPebble"
 }
 
-local spawnPosition = Vector3.new(0, 10, 0)
-
-for i, twistedName in ipairs(twistedList) do
-    local twisted = game.ReplicatedStorage:FindFirstChild(twistedName)
-    if twisted then
-        local clone = twisted:Clone()
-        clone.Parent = game.Workspace
-        clone:SetPrimaryPartCFrame(CFrame.new(spawnPosition + Vector3.new(i * 10, 0, 0)))
+local function spawnTwisted(name)
+    for _, v in pairs(game:GetDescendants()) do
+        if v:IsA("Model") and v.Name == name then
+            local clone = v:Clone()
+            clone.Parent = game.Workspace
+            clone:SetPrimaryPartCFrame(CFrame.new(game.Players.LocalPlayer.Character.HumanoidRootPart.Position + Vector3.new(math.random(-10,10), 3, math.random(-10,10))))
+            return
+        end
     end
+end
+
+for _, twisted in ipairs(twistedList) do
+    spawnTwisted(twisted)
 end
