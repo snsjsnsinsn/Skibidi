@@ -1,21 +1,41 @@
+-- Script para spawnar Twisted com interface GUI
+
 local player = game.Players.LocalPlayer
-local astro = player:WaitForChild("Twisted: Astro")
-local vee = player:WaitForChild("Twisted: Vee")
-local shelly = player:WaitForChild("Twisted: Shelly")
-local sprout = player:WaitForChild("Twisted: Sprout")
+local playerGui = player:FindFirstChild("PlayerGui")
 
-local clone = player.Modelo:Clone(astro, vee, sprout, shelly)
-clone.Parent = workspace
-clone:SetPrimaryPartCFrame(CFrame.new(posicao))
+-- Criar GUI
+local screenGui = Instance.new("ScreenGui", playerGui)
+local frame = Instance.new("Frame", screenGui)
+frame.Size = UDim2.new(0, 200, 0, 300)
+frame.Position = UDim2.new(0.5, -100, 0.5, -150)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 
-spawnObjeto(astro, Vector3.new(0, 5, 0))
-spawnObjeto(vee, Vector3.new(10, 5, 0))
-spawnObjeto(shelly, Vector3.new(20, 5, 0))
-spawnObjeto(sprout, Vector3.new(30, 5, 0))
-
-local modelIDs = {
-    ["Twisted sprout"] = "4500",
-    ["Twisted Vee"] = "4500",
-    ["Twisted Astro"] = "5000",
-    ["Twisted Shelly"] = "4025",
+-- Criar botões para cada Twisted
+local twistedLista = {
+    "Astro",
+    "Pebble",
+    "Shelly",
+    "Vee",
+    "Sprout"
 }
+
+function spawnTwisted(nomeTwisted)
+    local args = {
+        [1] = "Summon",
+        [2] = nomeTwisted
+    }
+    game:GetService("ReplicatedStorage").Remotes.TwistedEvent:FireServer(unpack(args))
+end
+
+for i, twisted in ipairs(twistedLista) do
+    local button = Instance.new("TextButton", frame)
+    button.Size = UDim2.new(1, 0, 0, 50)
+    button.Position = UDim2.new(0, 0, 0, (i - 1) * 50)
+    button.Text = twisted
+    button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    button.MouseButton1Click:Connect(function()
+        spawnTwisted(twisted)
+    end)
+end
