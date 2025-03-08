@@ -1,0 +1,17 @@
+
+local astro =Player game.ServerStorage:WaitForChild("Twisted: Astro")
+local vee =player game.ServerStorage:WaitForChild("Twisted: Vee")
+local shelly =player game.ServerStorage:WaitForChild("Twisted: Shelly")
+local sprout =player game.ServerStorage:WaitForChild("Twisted: Sprout")
+    local clone =player  modelo:Clone(Astr,Vee, Sprout, Shelly)
+    clone.Parent = workspace
+    clone:SetPrimaryPartCFrame(CFrame.new(posicao))  
+spawnObjeto(astro, Vector3.new(0, 5, 0))   
+spawnObjeto(vee, Vector3.new(10, 5, 0)
+spawnObjeto(shelly, Vector3.new(20, 5, 0)) 
+spawnObjeto(sprout, Vector3.new(30, 5, 0))local modelIDs =player {
+    ["Twisted sprout"] = "4500",
+    ["Twisted Vee"] = "4500",
+    ["Twisted Astro"] = "5000",
+    [Twisted Shelly"] =4025",
+}
