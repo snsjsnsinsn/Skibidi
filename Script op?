@@ -1,41 +1,18 @@
--- Script para spawnar Twisted com interface GUI
-
-local player = game.Players.LocalPlayer
-local playerGui = player:FindFirstChild("PlayerGui")
-
--- Criar GUI
-local screenGui = Instance.new("ScreenGui", playerGui)
-local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 200, 0, 300)
-frame.Position = UDim2.new(0.5, -100, 0.5, -150)
-frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-
--- Criar botões para cada Twisted
-local twistedLista = {
-    "Astro",
-    "Pebble",
-    "Shelly",
-    "Vee",
-    "Sprout"
+local twistedList = {
+    "TwistedAstro",
+    "TwistedShelly",
+    "TwistedSprout",
+    "TwistedVee",
+    "TwistedPebble"
 }
 
-function spawnTwisted(nomeTwisted)
-    local args = {
-        [1] = "Summon",
-        [2] = nomeTwisted
-    }
-    game:GetService("ReplicatedStorage").Remotes.TwistedEvent:FireServer(unpack(args))
-end
+local spawnPosition = Vector3.new(0, 10, 0)
 
-for i, twisted in ipairs(twistedLista) do
-    local button = Instance.new("TextButton", frame)
-    button.Size = UDim2.new(1, 0, 0, 50)
-    button.Position = UDim2.new(0, 0, 0, (i - 1) * 50)
-    button.Text = twisted
-    button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-
-    button.MouseButton1Click:Connect(function()
-        spawnTwisted(twisted)
-    end)
+for i, twistedName in ipairs(twistedList) do
+    local twisted = game.ReplicatedStorage:FindFirstChild(twistedName)
+    if twisted then
+        local clone = twisted:Clone()
+        clone.Parent = game.Workspace
+        clone:SetPrimaryPartCFrame(CFrame.new(spawnPosition + Vector3.new(i * 10, 0, 0)))
+    end
 end
